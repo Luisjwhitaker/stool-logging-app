@@ -20,15 +20,21 @@ def on_click():
 #    print(poop_type)
 #    print(myEntry.get())
     conn = sqlite3.connect('log.db')
-    cursor = conn.cursor()
-    cursor.execute("""INSERT INTO LOG(
-            dt.strftime("%H:%M %Z"),
+    c = conn.cursor()
+    c.execute("""INSERT INTO log (
+            Date,
+            Time,
+            Type,
+            Comment
+    ) VALUES(?,?,?,?)
+    """,(
             dt.strftime("%B %d,%Y"),
+            dt.strftime("%H:%M %Z"),
             poop_type,
             myEntry.get()
-    )
-    """)
+    ))
     conn.commit()
+    c.close()
     conn.close()
 
 
