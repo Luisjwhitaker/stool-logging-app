@@ -19,10 +19,7 @@ def on_click():
     dt = datetime.datetime.now()
 #    print(poop_type)
 #    print(myEntry.get())
-#    insertRow = [dt.strftime("%H:%M %Z"),dt.strftime("%B %d,%Y"),poop_type,myEntry.get()]
-#    sheet.append_row(insertRow)
     conn = sqlite3.connect('log.db')
-
     cursor = conn.cursor()
     cursor.execute("""INSERT INTO LOG(
             dt.strftime("%H:%M %Z"),
@@ -31,7 +28,6 @@ def on_click():
             myEntry.get()
     )
     """)
-
     conn.commit()
     conn.close()
 
