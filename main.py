@@ -11,14 +11,13 @@ clicked = StringVar()
 clicked.set('Select Poop Type')
 
 poop_type = 'non selected'
-def on_select(selected):
+def on_select(selected): # defines function for Dropdown Menue(OptionMenu)
     global poop_type
     poop_type = selected
-def on_click():
+def on_click(): # defines function for button
     global poop_type
     dt = datetime.datetime.now()
-#    print(poop_type)
-#    print(myEntry.get())
+    # SQL code follows:
     conn = sqlite3.connect('log.db')
     c = conn.cursor()
     c.execute("""INSERT INTO log (
@@ -38,7 +37,7 @@ def on_click():
     conn.close()
 
 
-
+# define options for Dropdown Menu (OptionMenu)
 pooptypes=[
     '1. Separate hard lumps',
     '2. Sausage shaped but lumpy',
@@ -49,12 +48,14 @@ pooptypes=[
     '7. Watery, no solid pieces'
 ]
 
+# lay out/ initialize widgets for main window below
 typeLabel = Label(root, text='Type: ')
 aDropbox = OptionMenu(root, clicked, *pooptypes, command=on_select)
 commentLabel = Label(root, text='Comments:')
 myEntry = Entry(root)
 submitbtn = Button(root, text='Submit', command=on_click)
 
+# display widgets on screen
 typeLabel.grid(row=0, column=0)
 aDropbox.grid(row=0, column=1)
 commentLabel.grid(row=2, column=0)
