@@ -11,6 +11,19 @@ clicked = StringVar()
 clicked.set('Select Poop Type')
 
 poop_type = 'non selected'
+
+#create sqlite3 database:
+"""conn = sqlite3.connect('stool_log.db')
+c = conn.cursor()
+c.execute(CREATE Table logs (
+        date text,
+        time text,
+        type text,
+        comment text
+        ))
+conn.commit()
+conn.close()"""
+
 def on_select(selected): # defines function for Dropdown Menue(OptionMenu)
     global poop_type
     poop_type = selected
@@ -18,23 +31,17 @@ def on_click(): # defines function for button
     global poop_type
     dt = datetime.datetime.now()
     # SQL code follows:
-    conn = sqlite3.connect('log.db')
+    conn = sqlite3.connect('stool_log.db')
     c = conn.cursor()
-    c.execute("""INSERT INTO log (
-            Date,
-            Time,
-            Type,
-            Comment
-    ) VALUES(?,?,?,?)
-    """,(
-            dt.strftime("%B %d,%Y"),
-            dt.strftime("%H:%M %Z"),
-            poop_type,
-            myEntry.get()
-    ))
+    c.execute("INSERT INTO logs VALUES(:date,:time,:type,:comment)",{
+            'date': dt.strftime("%B %d,%Y"),
+            'time': dt.strftime("%H:%M %Z"),
+            'type': poop_type,
+            'comment':myEntry.get()
+    })
     conn.commit()
-    c.close()
     conn.close()
+    #root.messagebox.showinfo(title="Success",message="Successfully logged input")
 
 
 # define options for Dropdown Menu (OptionMenu)
@@ -61,7 +68,5 @@ aDropbox.grid(row=0, column=1)
 commentLabel.grid(row=2, column=0)
 myEntry.grid(row=3, column=0, columnspan=2)
 submitbtn.grid(row=4, column=0, columnspan=2)
-
-
 
 root.mainloop()
