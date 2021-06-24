@@ -1,10 +1,12 @@
 import sqlite3
 from tkinter import *
+from tkinter import font as tkFont
 import datetime
 
 root = Tk()
-root.title('Poop Tracker')
+root.title('Stool-IO')
 root.geometry('400x400')
+root.configure(bg='#3dd9d9')
 
 
 clicked = StringVar()
@@ -37,10 +39,11 @@ def on_click(): # defines function for button
             'date': dt.strftime("%B %d,%Y"),
             'time': dt.strftime("%H:%M %Z"),
             'type': poop_type,
-            'comment':myEntry.get()
+            'comment': myEntry.get()
     })
     conn.commit()
     conn.close()
+    messagebox.showinfo('showinfo','submitted')
     #root.messagebox.showinfo(title="Success",message="Successfully logged input")
 
 
@@ -56,11 +59,13 @@ pooptypes=[
 ]
 
 # lay out/ initialize widgets for main window below
-typeLabel = Label(root, text='Type: ')
+rale20 = tkFont.Font(family='raleway', size=20)
+typeLabel = Label(root, text='Stool Type: ', font="rale20")
 aDropbox = OptionMenu(root, clicked, *pooptypes, command=on_select)
-commentLabel = Label(root, text='Comments:')
-myEntry = Entry(root)
-submitbtn = Button(root, text='Submit', command=on_click)
+commentLabel = Label(root, text='Comments:', font="rale20")
+myEntry = Entry(root, font="rale20")
+submitbtn = Button(root, text='Submit', command=on_click, font="rale20")
+#chartbtn = Button(root, text='See Log', command=see_log, font="raleway")
 
 # display widgets on screen
 typeLabel.grid(row=0, column=0)
@@ -68,5 +73,6 @@ aDropbox.grid(row=0, column=1)
 commentLabel.grid(row=2, column=0)
 myEntry.grid(row=3, column=0, columnspan=2)
 submitbtn.grid(row=4, column=0, columnspan=2)
+#chartbrn.grid(row=5, cloumn=0, columnspan=2)
 
 root.mainloop()
