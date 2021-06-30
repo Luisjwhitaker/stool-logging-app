@@ -1,11 +1,12 @@
 import sqlite3
 from tkinter import *
-from tkinter import font as tkFont
+from PIL import ImageTk,Image
 import datetime
+from tkinter import font as tkFont
 
 root = Tk()
 root.title('Stool-IO')
-root.geometry('400x400')
+#root.geometry('800x800')
 root.configure(bg='#3dd9d9')
 
 
@@ -17,12 +18,12 @@ poop_type = 'non selected'
 #create sqlite3 database:
 """conn = sqlite3.connect('stool_log.db')
 c = conn.cursor()
-c.execute(CREATE Table logs (
+c.execute('''CREATE Table logs (
         date text,
         time text,
         type text,
         comment text
-        ))
+        )''')
 conn.commit()
 conn.close()"""
 
@@ -43,10 +44,15 @@ def on_click(): # defines function for button
     })
     conn.commit()
     conn.close()
-    messagebox.showinfo('showinfo','submitted')
+    print_data=f'{poop_type} : {myEntry.get()} submitted'
+    submitLabel = Label(root, text="Data Loged", font="Raleway")
+    submitLabel.grid(row=5, columnspan=2, pady=10)
+    print(print_data)
+    myEntry.delete(0,'end')
+    #messagebox.showinfo('showinfo','submitted')
     #root.messagebox.showinfo(title="Success",message="Successfully logged input")
 
-
+# -- variables --
 # define options for Dropdown Menu (OptionMenu)
 pooptypes=[
     '1. Separate hard lumps',
@@ -58,21 +64,30 @@ pooptypes=[
     '7. Watery, no solid pieces'
 ]
 
+default_font = ('Raleway', 20)
+#large_font = (family='Ariel', size=40)
+
 # lay out/ initialize widgets for main window below
-rale20 = tkFont.Font(family='raleway', size=20)
-typeLabel = Label(root, text='Stool Type: ', font="rale20")
+canvas = Canvas(root, width = 800, height = 390)
+typeLabel = Label(root, text='Stool Type: ', font="default_font")
 aDropbox = OptionMenu(root, clicked, *pooptypes, command=on_select)
-commentLabel = Label(root, text='Comments:', font="rale20")
-myEntry = Entry(root, font="rale20")
-submitbtn = Button(root, text='Submit', command=on_click, font="rale20")
-#chartbtn = Button(root, text='See Log', command=see_log, font="raleway")
+aDropbox.config(font='Raleway')
+commentLabel = Label(root, text='Comments:', font="Raleway")
+myEntry = Entry(root, font="Raleway", width=70,)
+submitBtn = Button(root, text='Submit', command=on_click, font="Raleway")
+#chartBtn = Button(root, text='See Log', command=see_chart, font="default_font")
 
 # display widgets on screen
-typeLabel.grid(row=0, column=0)
-aDropbox.grid(row=0, column=1)
+canvas.grid(columnspan=2)
+logo = ImageTk.PhotoImage(Image.open('logo.png'))
+logo_label = Label(image=logo)
+logo_label.image=logo
+logo_label.grid(row=0,column=0,columnspan=2)
+typeLabel.grid(row=1, column=0)
+aDropbox.grid(row=1, column=1)
 commentLabel.grid(row=2, column=0)
-myEntry.grid(row=3, column=0, columnspan=2)
-submitbtn.grid(row=4, column=0, columnspan=2)
+myEntry.grid(row=2, column=1, pady=20)
+submitBtn.grid(row=4, column=0, columnspan=2)
 #chartbrn.grid(row=5, cloumn=0, columnspan=2)
 
 root.mainloop()
