@@ -1,4 +1,4 @@
-#Stool-IO
+# Stool-IO
 
 ## Cloning and Running
 1.Clone this Project:
