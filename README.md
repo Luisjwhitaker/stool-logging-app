@@ -1,12 +1,12 @@
 # Stool-IO
 
 ## Cloning and Running
-1.Clone this Project:
+1. Clone this Project:
 ```
 git clone https://github.com/Luisjwhitaker/stool-logging-app.git
 ```
-2.Navigate to the project folder
-3.Open the Project
+2. Navigate to the project folder
+3. Open the Project
 ```
 python main.py
 ```
