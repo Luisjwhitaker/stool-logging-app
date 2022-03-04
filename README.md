@@ -1,5 +1,5 @@
 # Stool-IO
-
+Stool-IO is a bowel movement/ stool logger that helps gastroenterology patients keep track of bowel movements and other events and share that information with their doctors via Google Sheets.
 ## Cloning and Running
 1. Clone this Project:
 ```
